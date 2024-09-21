@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LiteNote TextEditor - lightweight and clean TextEditor with auto-save, multi-tabs, syntax highlighting, and more. Available on Mac App Store.">
+  <title>LiteNote TextEditor</title>
+
+  <!-- Roboto Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    }
+
+    /* Custom Animations */
+    .fade-in {
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Neumorphic button style with hover */
+    .btn-orange {
+      background-color: #ff7e5f;
+      color: white;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn-orange:hover {
+      background-color: #feb47b;
+      box-shadow: inset 5px 5px 15px rgba(0, 0, 0, 0.2), inset -5px -5px 15px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Subtle hover effect for feature cards */
+    .feature-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Footer Styling with orange gradient */
+    footer {
+      background: linear-gradient(90deg, #ff7e5f, #feb47b);
+      color: white;
+      padding: 12px 0;
+      text-align: center;
+      transition: all 0.3s ease-in-out;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 90%; /* Allow the modal to take up 90% of the screen width */
+      max-width: 900px; /* Set max-width so the modal doesn't get too large */
+      max-height: 90%; /* Set max-height so the modal doesn't overflow the screen vertically */
+      overflow: auto; /* Allow scrolling if content overflows vertically */
+      position: relative;
+    }
+
+    .modal img {
+      width: 100%; /* Image should take full width of the modal */
+      max-height: 80vh; /* Set a max-height to ensure the image doesn't overflow */
+      object-fit: contain; /* Scale the image while maintaining aspect ratio */
+      border-radius: 5px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -2px; /* Move the button slightly above the modal content */
+      right: 3px; /* Move the button further right to prevent overlap with the image */
+      background: transparent;
+      border: none;
+      font-size: 1.8rem; /* Slightly larger X for better visibility */
+      cursor: pointer;
+      z-index: 100; /* Ensure the close button stays on top */
+    }
+  </style>
+</head>
+<body class="text-gray-900">
+
+  <!-- Header -->
+  <header class="header-gradient py-8 text-center text-white fade-in">
+    <h1 class="text-5xl font-bold">LiteNote TextEditor</h1>
+    <p class="mt-4 text-xl fade-in">Simple, Lightweight Text Editor for Mac</p>
+    <a href="https://apps.apple.com" target="_blank">
+      <button class="mt-6 px-8 py-3 rounded-full btn-orange text-lg font-semibold neumorphic fade-in">Get it on the Mac App Store</button>
+    </a>
+  </header>
+
+  <!-- Features Section -->
+  <section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <h2 class="text-5xl font-bold text-center mb-16 text-gray-800 fade-in">Key Features</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <!-- Feature 1 -->
+        <div class="text-center p-8 bg-white rounded-lg neumorphic feature-card" data-feature="lightweight">
+          <div class="aspect-w-16 aspect-h-9">
+            <img src="assets/Notepad-Main.png" alt="Lightweight" class="w-full h-full object-contain">
+          </div>
+          <h3 class="text-2xl font-semibold mt-4">Lightweight TextEditor</h3>
+          <p class="text-gray-600 mt-2">Clean, simple interface with a focus on performance.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="text-center p-8 bg-white rounded-lg neumorphic feature-card" data-feature="autosave">
+          <div class="aspect-w-16 aspect-h-9">
+            <img src="assets/Auto-Save.png" alt="Auto Save" class="w-full h-full object-contain">
+          </div>
+          <h3 class="text-2xl font-semibold mt-4">Auto Save</h3>
+          <p class="text-gray-600 mt-2">Automatically saves tabs and restores them on next use.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="text-center p-8 bg-white rounded-lg neumorphic feature-card" data-feature="multitabs">
+          <div class="aspect-w-16 aspect-h-9">
+            <img src="assets/Multi-Tabs.png" alt="Multi Tabs" class="w-full h-full object-contain">
+          </div>
+          <h3 class="text-2xl font-semibold mt-4">Multi Tabs Support</h3>
+          <p class="text-gray-600 mt-2">Effortlessly manage multiple documents at once.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="text-center p-8 bg-white rounded-lg neumorphic feature-card" data-feature="syntaxhighlighting">
+          <div class="aspect-w-16 aspect-h-9">
+            <img src="assets/Syntax-Highlighting.png" alt="Syntax Highlighting" class="w-full h-full object-contain">
+          </div>
+          <h3 class="text-2xl font-semibold mt-4">Syntax Highlighting</h3>
+          <p class="text-gray-600 mt-2">Supports syntax highlighting for 50+ programming languages.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="text-center p-8 bg-white rounded-lg neumorphic feature-card" data-feature="findreplace">
+          <div class="aspect-w-16 aspect-h-9">
+            <img src="assets/Find-Replace.png" alt="Find and Replace" class="w-full h-full object-contain">
+          </div>
+          <h3 class="text-2xl font-semibold mt-4">Find & Replace</h3>
+          <p class="text-gray-600 mt-2">Easily search and replace text in your documents.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="fade-in">
+    <p>&copy; 2024 LiteNote TextEditor. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Modal -->
+  <div id="featureModal" class="modal flex">
+    <div class="modal-content">
+      <button class="modal-close">&times;</button>
+      <img id="modalImage" src="" alt="Feature Image">
+      <h3 id="modalTitle" class="text-2xl font-semibold mt-4"></h3>
+      <p id="modalDescription" class="text-gray-600 mt-2"></p>
+    </div>
+  </div>
+
+  <script>
+    // Modal setup
+    const featureModal = document.getElementById('featureModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const closeModalBtn = document.querySelector('.modal-close');
+
+    const features = {
+      lightweight: {
+        title: 'Lightweight TextEditor',
+        image: 'assets/Notepad-Main.png',
+        description: 'The LiteNote TextEditor provides a clean and simple interface with an emphasis on performance, making it lightweight and easy to use for quick edits and notes.'
+      },
+      autosave: {
+        title: 'Auto Save',
+        image: 'assets/Auto-Save.png',
+        description: 'LiteNote TextEditor automatically saves your tabs and content, so you can pick up right where you left off without worrying about saving manually.'
+      },
+      multitabs: {
+        title: 'Multi Tabs Support',
+        image: 'assets/Multi-Tabs.png',
+        description: 'Manage multiple documents effortlessly by utilizing multi-tab support in LiteNote, which allows you to work on various files simultaneously.'
+      },
+      syntaxhighlighting: {
+        title: 'Syntax Highlighting',
+        image: 'assets/Syntax-Highlighting.png',
+        description: 'With support for over 50 programming languages, LiteNote TextEditor’s syntax highlighting makes it easier for developers and coders to read and edit code.'
+      },
+      findreplace: {
+        title: 'Find & Replace',
+        image: 'assets/Find-Replace.png',
+        description: 'The Find and Replace feature allows you to quickly search for and replace text within your documents, boosting your productivity.'
+      }
+    };
+
+    // Open modal on card click
+    document.querySelectorAll('.feature-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const featureKey = e.currentTarget.getAttribute('data-feature');
+        const feature = features[featureKey];
+
+        modalImage.src = feature.image;
+        modalTitle.textContent = feature.title;
+        modalDescription.textContent = feature.description;
+
+        featureModal.style.display = 'flex'; // Show modal
+      });
+    });
+
+    // Close modal on click outside or X button
+    closeModalBtn.addEventListener('click', () => {
+      featureModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === featureModal) {
+        featureModal.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
